@@ -20,20 +20,30 @@ private BinaryTreeNode<int> BuildTree(int[] preOrd, int[] inOrd)
 
 private BinaryTreeNode<int> BuildTreeR(int[] inOrd, int inStart, int inEnd, int[] preOrd, int preStart)
 {
-  if (inStart == inEnd) return new BinaryTreeNode<int>(inOrd[inStart]);
-  if (inStart > inEnd) return null;
+   //found leaf return node without children
+    if (inStart == inEnd) return new BinaryTreeNode<int>(inOrd[inStart]);
+    // handled all nodes in subtree
+    if (inStart > inEnd) return null;
 
-  int indexOfRoot;
-  int root = preOrd[preStart];
-  for (indexOfRoot = inStart; indexOfRoot < inEnd; indexOfRoot++) 
-    if (inOrd[indexOfRoot] == root) break;
+    int indexOfRoot;
+    int root = preOrd[preStart];
+    //search for root index in inOrder table
+    for (indexOfRoot = inStart; indexOfRoot < inEnd; indexOfRoot++) 
+        if (inOrd[indexOfRoot] == root) break;
 
-  return new BinaryTreeNode<int>
-  {
-    Value = root,
-    Left = BuildTreeR(inOrd, inStart, indexOfRoot - 1, preOrd, preStart + 1),
-    Right = BuildTreeR(inOrd, indexOfRoot + 1, inEnd, preOrd, preStart + indexOfRoot - inStart + 1),
-  };
+    return new BinaryTreeNode<int>
+    {
+        Value = root,
+        //Build left subtree 
+        //inOrder elements to handle form 0 up to index of found root
+        // preOrder move start of virtual table up by 1 so preOrd[preStart] will be the next root
+        Left = BuildTreeR(inOrd, inStart, indexOfRoot - 1, preOrd, preStart + 1),
+        //Build Right subtree
+        //inOrder elements to handle run from found root index +1 to end of table
+        //preOrder move start up by the number of elements in left subTree using index of root
+        Right = BuildTreeR(inOrd, indexOfRoot + 1, inEnd, preOrd,
+        preStart + indexOfRoot - inStart + 1),
+    };
 }
 
 // Define other methods and classes here
