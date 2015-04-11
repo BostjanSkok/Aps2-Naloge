@@ -6,6 +6,10 @@ void Main()
 
 	var inOrder = new int[]{2,4,5,6,7,8,15,23,45,47,50,71};
 	var preOrder = new int[]{15,6,4,2,5,7,8,23,71,50,45,47};
+	//Draw naloga c
+	var inOrderC = new int[]{22, 16, 14, 10, 2, 8, 25, 7, 1, 6, 42, 5, 19, 40, 3, 33, 15, 39};
+	var preOrderC= new int[]{7, 16, 22, 8, 14, 2, 10, 25, 1, 19, 42, 6, 5, 33, 40, 3, 39, 15};
+	var root = BuildTree(preOrderC,inOrderC);
 	var root = BuildTree(preOrder,inOrder);
 	Draw<int>(root,@"C:\Users\BostjanSkok\Documents\New folder (4)\BinaryTreeNode.dgml");
 }
